@@ -19,11 +19,17 @@ os.environ["QIANFAN_SECRET_KEY"] = pw_dict["SECRET_KEY"]
 
 
 chat_comp = qianfan.ChatCompletion()
-
+input_str="麦当劳的香芋派一个，双层吉士堡一个，无糖可乐一杯"
+prompt='''
+我希望你能作为一个专业的营养师，为我分析我本次摄入饮食的营养情况，需要考虑到口语化的分量描述词，以及了解常见食物的营养成分。
+所有的营养信息必须来自于官方营养信息表
+你的回答不需要包含其他内容，严格输出为一段结构化的json格式，以下是一个示例参考。
+[{"食物名称":"香芋派","分量":"一个","重量(g)":90,"能量(kcal)":260,"蛋白质(g)":1,"碳水化合物(g)":39,"脂肪(g)":11,"胆固醇(mg)":10,"钠(mg)":11,"钙(mg)":11}]。以下是我这次的饮食内容:{}
+'''
 # 调用默认模型，ERNIE-Lite-8K-0922（即ERNIE-Bot-turbo）
 resp = chat_comp.do(messages=[{
     "role": "user",
-    "content": "你好"
+    "content": prompt.format(input_str)
 }])
 
 print(resp["body"])
